@@ -1,0 +1,25 @@
+{
+  "name": "poolblynklink",
+  "version": "1.0.0",
+  "description": "a poolController to IoT Blynk.cc API",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rerouted/poolBlynkLink.git"
+  },
+  "author": "Ryan Sullivan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rerouted/poolBlynkLink/issues"
+  },
+  "homepage": "https://github.com/rerouted/poolBlynkLink#readme",
+  "dependencies": {
+    "blynk-library": "^0.5.4",
+    "dotenv": "^8.0.0",
+    "socket.io-client": "^2.2.0"
+  },
+  "devDependencies": {}
+}
