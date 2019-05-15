@@ -10,6 +10,7 @@ var blynk = new Blynk.Blynk(AUTH);
 
 
 const vPinPoolSetPoint = new blynk.VirtualPin(pin.iTouchPoolSetPoint); // Pool Heater
+const vChlorinatorSetPoint = new blynk.VirtualPin(pin.scgPercent)
 const vPinCircuit2 = new blynk.VirtualPin(pin.circuit2); // Pool Lights
 const vPinCircuit3 = new blynk.VirtualPin(pin.circuit3); // Aux Circuit #1
 const vPinCircuit4 = new blynk.VirtualPin(pin.circuit4); // Aux Circuit #2
@@ -91,8 +92,9 @@ socket.on('chlorinator', function(data){
 	blynk.virtualWrite(pin.scgSalt, data.chlorinator.saltPPM + ' PPM');
 	blynk.virtualWrite(pin.scgPercent, data.chlorinator.outputPoolPercent + '%');
 	blynk.virtualWrite(pin.scgStatus, data.chlorinator.status);
-	blynk.virtualWrite(pin.scgSuperChlorinate, data.chlorinator.superChlorinate);
-	blynk.virtualWrite(pin.scgSuperChlorinateHours, data.chlorinator.superChlorinateHours);
+	// blynk.virtualWrite(pin.scgSuperChlorinate, data.chlorinator.superChlorinate);
+	blynk.virtualWrite(pin.scgSuperChlorinateHours, data.chlorinator.superChlorinateHours + ' Hours');
+	data.chlorinator.superChlorinate ? blynk.virtualWrite(pin.scgSuperChlorinate, 'True') : blynk.virtualWrite(pin.scgSuperChlorinate, 'False'); 
 });
 
 // Listen for events
@@ -101,6 +103,12 @@ vPinPoolSetPoint.on('write', function(data) {
   socket.emit('setPoolSetPoint', Number(data));
   // blynk.notify('Temp setpoint changed' + data);
 });
+vChlorinatorSetPoint.on('write', function(data) {
+  term.write('Chlorinator SetPoint:' + Number(data) + '\n');
+  socket.emit('setchlorinator', Number(data), 0, 0);
+  // setchlorinator(poolLevel, spaLevel, superChlorinateHours)
+});
+
 vPinCircuit2.on('write', function(data) {
   socket.emit('toggleCircuit', pin.circuit2);
 });
