@@ -15,8 +15,10 @@ SERVER=http://localhost:3000
 
 4. Start the app by running `npm start`
 
-5. Look at autoStart.sh script for help on getting this node app to auto run at boot.  Adjust to your liking.
+5. Look at [autoStart.sh](autoStart.sh) script for help on getting this node app to auto run at boot.  Adjust to your liking.
 
 6. Add widgets to your project and link them to the appropriate vPins.  Below in the example I created.
 
 ![Example Screenshot](/screenshot1.jpeg)
+
+7. Use the following Blynk QR code as a project template to get you started. ![Blynk QR Code](/QR_Blynk_Demo.jpeg)
