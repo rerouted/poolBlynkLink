@@ -54,14 +54,12 @@ socket.on('time', function(data){
 
 socket.on('pump', function(data){
 	var pumpData = data.pump
-	console.log('! Got a pump packet !' + Object.keys(data.pump).length);
-	console.log(data.pump[1].watts);
 
 	for (i = 0; i < Object.keys(data.pump).length; i++) {
 		blynk.virtualWrite(pin.pump[i].watts, data.pump[i+1].watts);
 		blynk.virtualWrite(pin.pump[i].rpm, data.pump[i+1].rpm);
-		blynk.virtualWrite(pin.pump[i].watts, data.pump[i+1].gpm);
-		var pumpLed = new blynk.WidgetLED(pin.pump[i+1].status);
+		blynk.virtualWrite(pin.pump[i].gpm, data.pump[i+1].gpm);
+		var pumpLed = new blynk.WidgetLED(pin.pump[i].status);
 
 		if (data.pump[i+1].run == 10) {
 			blynk.setProperty(pin.pump[i].status, 'color', '#23C48E')
@@ -82,6 +80,7 @@ socket.on('circuit', function(data){
 	// add more per your system requirements
 
 	blynk.virtualWrite(pin.circuit2, circuit2);
+	// blynk.virtualWrite(pin.intellibriteMode, circuit2); // updates Intellibrite status on blynk UI
 	blynk.virtualWrite(pin.circuit3, circuit3);
 	blynk.virtualWrite(pin.circuit4, circuit4);
 	// map additional circuits above to virtual pins
@@ -92,6 +91,8 @@ socket.on('chlorinator', function(data){
 	blynk.virtualWrite(pin.scgSalt, data.chlorinator.saltPPM + ' PPM');
 	blynk.virtualWrite(pin.scgPercent, data.chlorinator.outputPoolPercent + '%');
 	blynk.virtualWrite(pin.scgStatus, data.chlorinator.status);
+	blynk.virtualWrite(pin.scgSuperChlorinate, data.chlorinator.superChlorinate);
+	blynk.virtualWrite(pin.scgSuperChlorinateHours, data.chlorinator.superChlorinateHours);
 });
 
 // Listen for events
@@ -116,72 +117,72 @@ vPinLightMode.on('write', function(data) {
 			socket.emit('setLightMode', 0);
 			term.write('Lights set to off\n');
 		break;
-		case 1: // on
+		case 2: // on
 			socket.emit('setLightMode', 1);
 			term.write('Lights set to on\n');
 		break;
-		case 2: // color sync
+		case 3: // color sync
 			socket.emit('setLightMode', 128);
 			term.write('Lights set to color sync\n');
 		break;
-		case 3: // color swim
+		case 4: // color swim
 			socket.emit('setLightMode', 144);
 			term.write('Lights set to color swim\n');
 		break;
-		case 4: // color set
+		case 5: // color set
 			socket.emit('setLightMode', 160);
 			term.write('Lights set to color set\n');
 		break;
-		case 5: // color save
+		case 6: // color save
 			socket.emit('setLightMode', 190);
 			term.write('Lights mode saved\n');
 		break;
-		case 6: // color recall
+		case 7: // color recall
 			socket.emit('setLightMode', 191);
 			term.write('Lights mode set to recall\n');
 		break;
 // ---
-		case 7: // white
+		case 8: // white
 			socket.emit('setLightMode', 196);
 			term.write('Lights set to white\n');
 		break;
-		case 8: // green
+		case 9: // green
 			socket.emit('setLightMode', 194);
 			term.write('Lights set to green\n');
 		break;
-		case 9: // blue
+		case 10: // blue
 			socket.emit('setLightMode', 193);
 			term.write('Lights set to blue\n');
 		break;
-		case 10: // red
+		case 11: // red
 			socket.emit('setLightMode', 195);
 			term.write('Lights set to red\n');
 		break;
-		case 11: // magenta
+		case 12: // magenta
 			socket.emit('setLightMode', 197);
 			term.write('Lights set to magenta\n');
 		break;
-		case 12: // party mode
+		case 13: // party mode
 			socket.emit('setLightMode', 177);
 			term.write('Lights set to party mode\n');
 		break;
-		case 13: // romance mode
+		case 14: // romance mode
 			socket.emit('setLightMode', 178);
 			term.write('Lights set to romance mode\n');
 		break;
-		case 14: // caribbean mode
+		case 15: // caribbean mode
 			socket.emit('setLightMode', 179);
 			term.write('Lights set to caribbean mode\n');
 		break;
-		case 15: // american mode
+		case 16: // american mode
 			socket.emit('setLightMode', 180);
 			term.write('Lights set to merica mode\n');
 		break;
-		case 16: // sunset mode
+		case 17: // sunset mode
 			socket.emit('setLightMode', 181);
 			term.write('Lights set to sunbet mode\n');
 		break;
-		case 17: // royal mode
+		case 18: // royal mode
 			socket.emit('setLightMode', 182);
 			term.write('Lights set to royal mode\n');
 		break;

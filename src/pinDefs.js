@@ -57,6 +57,7 @@ module.exports = Object.freeze({
     // IntelliChlor SCG
     scgSalt: 50,
     scgPercent: 51,
-    scgStatus: 52
-
+    scgStatus: 52,
+    scgSuperChlorinate: 53,
+    scgSuperChlorinateHours: 54
 });
