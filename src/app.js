@@ -8,12 +8,12 @@ var AUTH = process.env.API_KEY; // Add your 32 character blynk auth token or def
 // console.log('API_KEY = ' + AUTH);
 var blynk = new Blynk.Blynk(AUTH);
 
-
 const vPinPoolSetPoint = new blynk.VirtualPin(pin.iTouchPoolSetPoint); // Pool Heater
 const vChlorinatorSetPoint = new blynk.VirtualPin(pin.scgPercent)
 const vPinCircuit2 = new blynk.VirtualPin(pin.circuit2); // Pool Lights
 const vPinCircuit3 = new blynk.VirtualPin(pin.circuit3); // Aux Circuit #1
 const vPinCircuit4 = new blynk.VirtualPin(pin.circuit4); // Aux Circuit #2
+console.log('Circuit 2 = ' + pin.circuit2 + ' Circuit 3 = ' +pin.circuit3 + ' Circuit 4 = ' +pin.circuit2);
 const vPinLightMode = new blynk.VirtualPin(pin.intellibriteMode); // Intellibrite Light Modes
 
 // Blynk Widget to Pin Mapping
@@ -24,9 +24,9 @@ socket.on('connect', function(){
 	console.log('Successfully connected to pool controller' + '\n');
 });
 
-socket.on('all', function(){
-	socket.emit('circuit'); // trying to get the controller to send us some circuit info.
-});
+// socket.on('all', function(){
+// 	socket.emit('circuit'); // trying to get the controller to send us some circuit info.
+// });
 
 socket.on('temperature', function(data){
 	// var poolTemp = Number(data.temperature.poolTemp);
@@ -47,7 +47,7 @@ socket.on('time', function(data){
 	blynk.virtualWrite(pin.iTouchDateTime, controllerTimeStr);
 	
 	term.write(controllerTimeStr + '\n');
-	console.log(controllerTimeStr + '\n');
+	console.log(controllerTimeStr);
     // console.log(data.time.controllerTime);
     // socket.emit('echo');
 });
@@ -110,13 +110,16 @@ vChlorinatorSetPoint.on('write', function(data) {
 });
 
 vPinCircuit2.on('write', function(data) {
-  socket.emit('toggleCircuit', pin.circuit2);
+	term.write('Pool Lights toggle \n');
+  socket.emit('toggleCircuit', 2);
 });
 vPinCircuit3.on('write', function(data) {
-  socket.emit('toggleCircuit', pin.circuit3);
+	term.write('Circuit 3 toggle \n');
+  socket.emit('toggleCircuit', 3);
 });
 vPinCircuit4.on('write', function(data) {
-  socket.emit('toggleCircuit', pin.circuit4);
+	term.write('Circuit 4 toggle \n');
+  socket.emit('toggleCircuit', 4);
 });
 
 vPinLightMode.on('write', function(data) {
@@ -149,7 +152,6 @@ vPinLightMode.on('write', function(data) {
 			socket.emit('setLightMode', 191);
 			term.write('Lights mode set to recall\n');
 		break;
-// ---
 		case 8: // white
 			socket.emit('setLightMode', 196);
 			term.write('Lights set to white\n');

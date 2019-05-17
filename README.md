@@ -15,7 +15,15 @@ SERVER=http://localhost:3000
 
 4. Start the app by running `npm start`
 
-5. Look at [autoStart.sh](autoStart.sh) script for help on getting this node app to auto run at boot.  Adjust to your liking.
+5. [PM2.io](https://pm2.io/) is a great NodeJS app manager that can help run, monitor and auto-start scripts like this.  I highly recommend it as it's what I use.
+```
+┌────────────────┬────┬─────────┬──────┬───────┬────────┬─────────┬────────┬──────┬───────────┬──────┬──────────┐
+│ App name       │ id │ version │ mode │ pid   │ status │ restart │ uptime │ cpu  │ mem       │ user │ watching │
+├────────────────┼────┼─────────┼──────┼───────┼────────┼─────────┼────────┼──────┼───────────┼──────┼──────────┤
+│ poolBlynkLink  │ 0  │ 1.0.0   │ fork │ 22235 │ online │ 0       │ 114m   │ 1.7% │ 37.9 MB   │ pi   │ enabled  │
+│ poolController │ 1  │ 5.3.0   │ fork │ 24251 │ online │ 0       │ 84m    │ 3.5% │ 60.8 MB   │ pi   │ disabled │
+└────────────────┴────┴─────────┴──────┴───────┴────────┴─────────┴────────┴──────┴───────────┴──────┴──────────┘
+```
 
 6. Add widgets to your project and link them to the appropriate vPins.  Below in the example I created.
 
